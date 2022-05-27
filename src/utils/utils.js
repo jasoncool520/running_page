@@ -89,10 +89,11 @@ const intComma = (x = '') => {
 
 const pathForRun = (run) => {
   try {
+    let fixMap = run.name === "run from keep" // keep
     const c = mapboxPolyline.decode(run.summary_polyline);
     // reverse lat long for mapbox
     c.forEach((arr) => {
-      [arr[0], arr[1]] = !NEED_FIX_MAP ? [arr[1], arr[0]] : gcoord.transform([arr[1], arr[0]], gcoord.GCJ02, gcoord.WGS84);
+      [arr[0], arr[1]] = !fixMap ? [arr[1], arr[0]] : gcoord.transform([arr[1], arr[0]], gcoord.GCJ02, gcoord.WGS84);
     });
     return c;
   } catch (err) {
